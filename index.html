@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>example</title>
+        <style>
+                table, tr, th {
+                        border: 1px solid;
+                }
+                table {
+                        width: center;
+                        border-collapse: collapse;
+                }
+        </style>
+
+
+</head>
+<body>
+<h1>Integracja testowa v. - A.0.0.1</h1>
+<h1>--------------------------------</h1>
+<table>
+<tr>
+<th> Pesel:    </th>
+<th> 909109090900    </th>
+</tr>
+<tr>
+<th> Imię: </th>
+<th> Daniel</th>
+</tr>
+<tr>
+<th> Nazwisko: </th>
+<th> Biesiada</th>
+</tr>
+</table>
+
+<form action="ewus-check.php" method="post">
+        Name:  <input type="text" name="username" /><br />
+        Email: <input type="text" name="email" /><br />
+        <input type="submit" name="submit" value="Submit me!" />
+</form>
+
+<form id="form" action="ewus-check.php" method="post">
+        <input type="hidden" name="action" value="get_variable">
+        <input type="submit" value="Submit">
+</form>
+
+<div id="result"></div>
+
+<script>
+        // get the form element
+        var form = document.getElementById('form');
+        // add a submit event listener to the form
+        form.addEventListener('submit', function(event) {
+                // prevent the form from submitting
+                event.preventDefault();
+                // get the form data
+                var data = new FormData(form);
+                // send a POST request to the PHP script
+                fetch('/ewus-check.php', {
+                        method: 'POST',
+                        body: data
+                })
+                        .then(response => response.json())
+                        .then(data => {
+                                // you can access the variable contained in the data object
+                                var variable = data.variable;
+
+                                // you can then use the variable in your HTML code
+                                document.getElementById('result').innerHTML = variable;
+                        });
+        });
+</script>
+
+
+
+<h1>-------------------------------</h1>
+
+</body>
+</Html>
